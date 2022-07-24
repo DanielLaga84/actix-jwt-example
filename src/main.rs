@@ -9,11 +9,13 @@ use actix_web::http::ContentEncoding;
 mod config;
 mod db;
 mod repository;
+mod models;
+mod middlewares;
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| 
-    App.new()
+    App::new()
     .wrap(middleware::Compress::new(ContentEncoding::Br))
     .wrap(middleware::Logger::default())
     .service(

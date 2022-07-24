@@ -2,10 +2,10 @@ use actix_web::{FromRequest, Error, HttpRequest, dev};
 use futures::future::{ok, err, Ready};
 use actix_web::error::ErrorUnauthorized;
 use jsonwebtoken::{decode, DecodingKey, Validation, Algorithm};
-use crate::config::{Config:: IConfig};
+use crate::config::{Config, IConfig};
 use crate::models::user::Claims;
 
-pub struct AutorizationService;
+pub struct AuthorizationService;
 
 impl FromRequest for AuthorizationService {
     type Error = Error;
@@ -17,7 +17,7 @@ impl FromRequest for AuthorizationService {
         match _auth {
             Some(_) => {
             let _split: Vec<&str> = _auth.unwrap().to_str().unwrap().split("Bearer").collect();
-            let token = _split[1].trin();
+            let token = _split[1].trim();
             let _config: Config = Config {};
             let _var = _config.get_config_with_key("SECRET_KEY");
             let key = _var.as_bytes();
