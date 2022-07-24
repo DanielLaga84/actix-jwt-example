@@ -83,7 +83,7 @@ impl IUserRepository for UserRepository {
     fn register(&self, user: Register) -> Response {
         let _exist = self.find_user_with_email((&user.email).parse().unwrap()).unwrap();
         match _exist { 
-            Some(_) => return Response { message: "This e-mail is already taken, use another e-mail".to_string(), status:false},
+            Some(_) => Response { message: "This e-mail is already taken, use another e-mail".to_string(), status:false},
             None => {
                 let _config: Config = Config{};
                 let database_name = _config.get_config_with_key("DATABASE_NAME");
@@ -93,7 +93,7 @@ impl IUserRepository for UserRepository {
                 sha.input_str(user.password.as_str());
                 let hash_pw = sha.result_str();
                 let user_id = uuid::Uuid::new_v4().to_string();
-                let _ex = db.collection(collection_name.as_str()).insert_one(doc! {"user_id": user_id, "name": user.name, "surename": user.surname, "email": user.email, "password": hash_pw, "phone": user.phone, "birth_date": user.birth_date }, None);
+                let _ex = db.collection(collection_name.as_str()).insert_one(doc! {"user_id": user_id, "name": user.name, "surname": user.surname, "email": user.email, "password": hash_pw, "phone": user.phone, "birth_date": user.birth_date }, None);
                 match _ex {
                     Ok(_) => Response { status: true, message : "Registered.".to_string()},
                     Err(_) => Response { status: false, message : "Something went wrong, please try again.".to_string()}
