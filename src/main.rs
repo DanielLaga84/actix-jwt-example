@@ -16,7 +16,7 @@ mod middlewares;
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
-    log::info!("starting HTTP server at http://localhost:8080");
+    log::info!("starting HTTP server at http://localhost:8000");
     
     HttpServer::new(|| 
     App::new()

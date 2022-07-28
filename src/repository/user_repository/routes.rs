@@ -1,3 +1,4 @@
+use actix_web::middleware::Logger;
 use actix_web::{post, web, HttpResponse, HttpRequest};
 use crate::models::user::{Login,Claims, Register};
 use crate::db::db::{Connection, IConnection};
@@ -14,8 +15,7 @@ async fn login(user: web::Json<Login>) -> HttpResponse {
 
     return match proc {
         Ok(_) => HttpResponse::Ok().json(proc.unwrap()),
-        Err(_) =>
-            HttpResponse::Ok().status(StatusCode::from_u16(401).unwrap()).json(proc.unwrap_err())
+        Err(_) => HttpResponse::Ok().status(StatusCode::from_u16(401).unwrap()).json(proc.unwrap_err())
         
     }
 }
